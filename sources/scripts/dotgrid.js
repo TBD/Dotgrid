@@ -43,10 +43,27 @@ function Dotgrid(width,height,grid_x,grid_y,block_x,block_y,thickness = 3,lineca
   this.interface = document.createElement("div");
   this.interface.id = "interface";
 
+  // --- TBD
+  this.output = document.createElement("textarea")
+  this.output.setAttribute('spellcheck', 'false')
+  this.output.id = "output"
+
+  this.png_canvas = document.createElement("canvas")
+  this.png_canvas.id = "png_canvas"
+  this.png_canvas.width = 300
+  this.png_canvas.height = 300
+
+  this.png_img = document.createElement("img")
+  this.png_img.id = "png_img"  
+
   this.install = function()
   {
     document.body.appendChild(this.element);
     document.body.appendChild(this.interface);
+
+    // --- TBD
+    document.body.appendChild(this.output);
+    document.body.appendChild(this.png_img);
 
     // Markers
     for (var x = this.grid_x; x >= 0; x--) {
@@ -348,13 +365,27 @@ function Dotgrid(width,height,grid_x,grid_y,block_x,block_y,thickness = 3,lineca
   this.export = function()
   {
     if(this.segments.length == 0){ return; }
+    
+    // --- TBD
+    this.output.value = dotgrid.svg_el.outerHTML;
 
-    dialog.showSaveDialog((fileName) => {
-      if (fileName === undefined){ return; }
-      fs.writeFile(fileName+".svg", dotgrid.svg_el.outerHTML, (err) => {
-        if(err){ alert("An error ocurred creating the file "+ err.message); return; }
-      });
-    });
+    var ctx = this.png_canvas.getContext("2d");
+
+    var svgString = new XMLSerializer().serializeToString(dotgrid.svg_el);
+    var svg = new Blob([svgString], {type: "image/svg+xml;charset=utf-8"});
+    var DOMURL = self.URL || self.webkitURL || self;
+    var url = DOMURL.createObjectURL(svg);
+
+    var img = new Image()
+    img.onload = function() {
+      ctx.clearRect(0,0, this.png_canvas.width, this.png_canvas.height);
+      ctx.drawImage(img, 0, 0);
+      var png = ctx.canvas.toDataURL("image/png");
+      this.png_img.src = png;
+      DOMURL.revokeObjectURL(png);
+    }.bind(this);
+    
+    img.src = url;
   }
 
   this.update_interface = function()

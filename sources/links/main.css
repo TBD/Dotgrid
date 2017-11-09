@@ -16,3 +16,21 @@ body { background:#fff; padding:30px; font-family: 'input_mono_regular'; -webkit
 .icon:hover { cursor: pointer; opacity: 1 }
 
 svg.vector { z-index: 1000;position: relative  }
+
+#output {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 400px; height: 400px; 
+    background-color: #eee; 
+    color: #aaa;
+    font-size: 10px;
+}
+
+#png_img {
+    position: absolute;
+    top: 40;
+    right: 80;
+    width: 300px;
+    height: 300px;
+}
