@@ -19,8 +19,8 @@ svg.vector { z-index: 1000;position: relative  }
 
 #output {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 40;
+    left: 20;
     width: 400px; height: 400px; 
     background-color: #eee; 
     color: #aaa;
@@ -28,9 +28,16 @@ svg.vector { z-index: 1000;position: relative  }
 }
 
 #png_img {
+		display: none;
     position: absolute;
     top: 40;
     right: 80;
     width: 300px;
     height: 300px;
+    border: 0;
+}
+
+/* hack to hide border when imge.src is null */
+#png_img[src*="data"] {
+	display: block;
 }
