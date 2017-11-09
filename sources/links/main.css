@@ -41,3 +41,12 @@ svg.vector { z-index: 1000;position: relative  }
 #png_img[src*="data"] {
 	display: block;
 }
+
+p {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  text-align: center;
+  font-size: 10px;
+  color: #777;
+}
